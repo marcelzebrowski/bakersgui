@@ -1,56 +1,67 @@
 package com.sugar.bakers.company.gui.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+public class WebSecurityConfig{
 
-        // https://docs.spring.io/spring-security/reference/5.8/migration/servlet/config.html
-        // in new spring versions mvcMatchers are deprecated!
-        /*http.csrf().disable().authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/login")
-                        .permitAll()
-                )
-                .logout(LogoutConfigurer::permitAll);
-        return http.build();*/
+    private final boolean IS_DEBUG_ENABLED = false;
 
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**").permitAll()
-                .antMatchers("/cake").hasAnyRole("USER")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf()
+                .disable()
+                    .formLogin(form->form.loginPage("/login")
+                        .usernameParameter("username")
+                        .passwordParameter("password").permitAll()).logout(LogoutConfigurer::permitAll);
+        http.authorizeHttpRequests((authentication) ->
+                authentication.anyRequest().authenticated()
+        );
+        return http.build();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.debug(IS_DEBUG_ENABLED)
+                .ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**");
+    }
 
-        auth.inMemoryAuthentication()
-                .withUser("marcel").password("marcel").roles("USER");
+    @Bean
+    public UserDetailsService userDetailsService(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(User.withUsername("user")
+                .password(bCryptPasswordEncoder.encode("password"))
+                .roles("USER")
+                .build());
+        return manager;
+    }
+
+    /*@Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailService userDetailService)
+            throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailService)
+                .passwordEncoder(bCryptPasswordEncoder)
+                .and()
+                .build();
+    }*/
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder()
+    {
+        return new BCryptPasswordEncoder();
     }
 }
