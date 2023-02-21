@@ -1,6 +1,6 @@
 @font-face {
     font-family: nunito;
-    src: url('Nunito-Regular.ttf');
+    src: url('../fonts/Nunito-Regular.ttf');
 }
 
 /* Reset */
@@ -14,12 +14,6 @@ img{
     display: block;
     max-height: 100%;
     height: auto;
-}
-
-.logoutLblPos{
-   position:fixed;
-   right:1rem;
-   top:1rem;
 }
 
 /* .card img {
