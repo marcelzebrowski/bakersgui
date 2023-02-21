@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Hello Cake!</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th> Name </th>
+        <th> Beschreibung </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${cakes.empty}">
+        <td colspan="2"> No Cake Available </td>
+    </tr>
+    <tr th:each="cake : ${cakes}">
+        <td><span th:text="${cake.name}"> Name </span></td>
+        <td><span th:text="${cake.beschreibung}"> Beschreibung </span></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">cakes</span>!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>

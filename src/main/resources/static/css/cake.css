@@ -1,0 +1,129 @@
+@font-face {
+    font-family: nunito;
+    src: url('../fonts/Nunito-Regular.ttf');
+}
+
+/* Reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img{
+    display: block;
+    max-height: 100%;
+    height: auto;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+cake:hover {
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+}
+
+.tiny_cake {
+    animation: up-down 1s infinite alternate;
+}
+
+@keyframes up-down {
+    from {
+        transform: translateY(0px) rotate(-10deg);
+    }
+    to {
+        transform: translateY(20px) rotate(10deg);
+    }
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+body{
+    font: 1.5rem "nunito",sans-serif;
+    min-height: 100vh; /*full page*/
+    background-color: #d668fe;
+    background-image: radial-gradient(whitesmoke, #d668fe);
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+main{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+
+header, footer{
+    position: sticky;
+    background-color: #510087;
+    color: whitesmoke;
+    text-align: center;
+}
+
+
+
+/*input*/
+
+input[type=password], select {
+    width: 100%;
+    padding: 1rem;
+    margin: 0rem;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 1rem;
+    margin: 0rem;
+    display: inline-block;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit]:hover{
+    background-color: #6702aa;
+}
+
+input[type=submit]{
+    width: 100%;
+    background-color: #be7ee9;
+    color: white;
+    margin: 1rem 0;
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+
+@media screen and (min-width: 576px) {
+    main{
+     justify-content: center;
+     flex-flow: row wrap;
+     padding: 1rem;
+    }
+}

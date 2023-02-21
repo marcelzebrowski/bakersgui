@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cake Order Login</title>
+  <link rel="stylesheet" th:href="@{/css/cake.css}">
+</head>
+<body>
+
+<header>
+  <h1>Cake Order</h1>
+</header>
+
+
+
+<main>
+
+  <cake class="rotate tiny_cake" >
+    <img src="img/cupcake.png" alt="Cupcake" width="250" height="250"/>
+  </cake>
+
+  <login>
+    <div th:if="${param.error}">
+      Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+      You have been logged out.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+      <label for="login">Login</label>
+      <input id="login" type="text" name="login"/>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password"/>
+      <input type="submit" value="Log in"/>
+    </form>
+  </login>
+</main>
+
+<footer>
+  <p>&copy; Zucker B&aumlcker GmbH</p>
+</footer>
+</body>
+</html>
