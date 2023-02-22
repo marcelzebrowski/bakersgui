@@ -1,5 +1,6 @@
 package com.sugar.bakers.company.gui;
 
+import com.sugar.bakers.company.domain.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,9 @@ public class CakeController {
         cakeList.add(new Cake("Test Kuchen2", "Ganz toller Kuchen2"));
 
         model.addAttribute("cakes",cakeList);
+
+
+        Order order;
 
         return "cake";
     }

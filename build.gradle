@@ -10,12 +10,18 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {
+	mavenLocal()
 	mavenCentral()
+
 }
 
 dependencies {
+
+	implementation 'com.sugar.bakers.company:domain:0.0.1-SNAPSHOT'
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-test'
+
 
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
