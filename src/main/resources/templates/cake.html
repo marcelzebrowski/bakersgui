@@ -12,10 +12,16 @@
     <header>
         <h1>Cake Order</h1>
         <nav>
+            <div th:each="cake, itemStat : *{cakes}" th:id="'cake' + ${cake.cakeId.id}">
+                <a th:href="'#cake' + ${cake.cakeId.id}" th:inline="text" >[[${cake.name}]]</a>
+            </div>
+        </nav>
+
+        <!--nav>
             <a href="#cake1">Apple</a>
             <a href="#cake2">Marble</a>
             <a href="#cake3">Rainbow</a>
-        </nav>
+        </nav-->
     </header>
 
     <form class="logoutLblPos" th:action="@{/logout}" method="post">
@@ -24,7 +30,16 @@
 
     <main>
 
-        <article id="cake1" class="card">
+        <article th:each="cake, itemStat : *{cakes}" th:id="'cake' + ${cake.cakeId.id}" class="card">
+            <figure>
+                <img th:src="${cake.picture}" th:alt="${cake.name}" width="250" height="250">
+                <figcaption th:inline="text">[[${cake.name}]]</figcaption>
+                <p th:inline="text">[[${cake.description}]]></p>
+                <input type="submit" value="Order Cake!"/>
+            </figure>
+        </article>
+
+        <!--article id="cake1" class="card">
             <figure>
                 <img src="img/apple.png" alt="Apple Pie" width="250" height="250">
                 <figcaption>Apple Pie</figcaption>
@@ -53,7 +68,7 @@
                 </p>
                 <input type="submit" value="Order Cake!"/>
             </figure>
-        </article>
+        </article-->
     </main>
 
     <footer>

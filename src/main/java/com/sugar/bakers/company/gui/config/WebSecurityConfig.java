@@ -42,11 +42,18 @@ public class WebSecurityConfig{
     @Bean
     public UserDetailsService userDetailsService(BCryptPasswordEncoder bCryptPasswordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("user")
-                .password(bCryptPasswordEncoder.encode("password"))
+        createMockUser(bCryptPasswordEncoder, manager, "Marcel");
+        createMockUser(bCryptPasswordEncoder, manager, "Dennis");
+        createMockUser(bCryptPasswordEncoder, manager, "Max");
+        createMockUser(bCryptPasswordEncoder, manager, "Robert");
+        return manager;
+    }
+
+    private void createMockUser(BCryptPasswordEncoder bCryptPasswordEncoder, InMemoryUserDetailsManager manager, String name){
+        manager.createUser(User.withUsername(name)
+                .password(bCryptPasswordEncoder.encode(name))
                 .roles("USER")
                 .build());
-        return manager;
     }
 
     /*@Bean
