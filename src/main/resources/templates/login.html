@@ -22,10 +22,10 @@
   </cake>
 
   <login>
-    <div th:if="${param.error}">
+    <div class="message" th:if="${param.error}">
       Invalid username and password.
     </div>
-    <div th:if="${param.logout}">
+    <div class="message" th:if="${param.logout}">
       You have been logged out.
     </div>
 

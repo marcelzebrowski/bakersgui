@@ -27,6 +27,16 @@ img{
     flex-flow: column nowrap;
 } */
 
+.message{
+    background-color: hsla(284, 99%, 72%, 0.6);
+    font-weight: bolder;
+    font-size: 2rem;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* cake */
 .card{
     scroll-margin-top: 8rem; /* small gap between header and picture*/
