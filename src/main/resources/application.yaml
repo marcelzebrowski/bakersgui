@@ -1,0 +1,5 @@
+
+bakershexagon:
+    service:
+        url: http://localhost
+        port: 8081
