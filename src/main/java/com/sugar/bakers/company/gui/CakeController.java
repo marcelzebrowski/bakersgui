@@ -54,9 +54,7 @@ public class CakeController {
         url += "/" + customer.getCustomerId().getId();
         url += "/" + id;
 
-        ResponseEntity<String> response = restTemplate.postForEntity( url, null , String.class );
-
-
+        restTemplate.postForEntity( url, null , String.class );
         return "success";
     }
 
