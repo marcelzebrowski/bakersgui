@@ -28,16 +28,23 @@
         <input type="submit" value="Sign Out"/>
     </form>
 
-    <main>
 
+    <welcome>
+        <span class="nowrap">Hello <span class="bold">[[${username}]]</span> nice to see you!</span>
+    </welcome>
+
+
+    <main>
+        <form action="#" method="post">
         <article th:each="cake, itemStat : *{cakes}" th:id="'cake' + ${cake.cakeId.id}" class="card">
             <figure>
                 <img th:src="${cake.picture}" th:alt="${cake.name}" width="250" height="250">
                 <figcaption th:inline="text">[[${cake.name}]]</figcaption>
-                <p th:inline="text">[[${cake.description}]]></p>
-                <input type="submit" value="Order Cake!"/>
+                <p th:inline="text">[[${cake.description}]]</p>
+                <input type="submit" th:formaction="'/order/cake/'+${cake.cakeId.id}" value="Order Cake!"/>
             </figure>
         </article>
+        </form>
 
         <!--article id="cake1" class="card">
             <figure>

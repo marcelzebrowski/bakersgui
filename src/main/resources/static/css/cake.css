@@ -27,6 +27,24 @@ img{
     flex-flow: column nowrap;
 } */
 
+welcome {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    color: hsla(284, 40%, 30%, 0.8);
+}
+
+.nowrap{
+    white-space: nowrap;
+}
+
+.bold {
+    font-weight: bolder;
+}
+
 .message{
     background-color: hsla(284, 99%, 72%, 0.6);
     font-weight: bolder;
@@ -165,10 +183,6 @@ header, footer{
     text-align: center;
 }
 
-header{
-    top: 0;
-}
-
 /*input*/
 
 input[type=password], select {
@@ -214,5 +228,11 @@ input[type=submit]{
      flex-flow: row wrap;
      padding: 1rem;
     }
-     
+ }
+
+@media screen and (max-width: 576px) {
+
+    welcome{
+        display: none;
+    }
  }

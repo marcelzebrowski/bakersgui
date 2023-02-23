@@ -7,11 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +40,15 @@ public class CakeController {
 
         model.addAttribute("cakes",cakeList);
 
+        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
+
         return "cake";
+    }
+
+
+    @PostMapping("/order/cake/{id}")
+    public String dropOrder(Model model, @PathVariable Long id){
+        return "success";
     }
 
     private void generateUrlToImages(List<Cake> cakeList) {
