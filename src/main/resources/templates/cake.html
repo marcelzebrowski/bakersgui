@@ -12,8 +12,8 @@
     <header>
         <h1>Cake Order</h1>
         <nav>
-            <div th:each="cake, itemStat : *{cakes}" th:id="'cake' + ${cake.cakeId.id}">
-                <a th:href="'#cake' + ${cake.cakeId.id}" th:inline="text" >[[${cake.name}]]</a>
+            <div th:each="cake, itemStat : *{cakes}">
+                <a th:href="'#cake' + ${cake.cakeId.id}">[[${cake.name}]]</a>
             </div>
         </nav>
 
@@ -35,16 +35,17 @@
 
 
     <main>
-        <form action="#" method="post">
+
         <article th:each="cake, itemStat : *{cakes}" th:id="'cake' + ${cake.cakeId.id}" class="card">
-            <figure>
-                <img th:src="${cake.picture}" th:alt="${cake.name}" width="250" height="250">
-                <figcaption th:inline="text">[[${cake.name}]]</figcaption>
-                <p th:inline="text">[[${cake.description}]]</p>
-                <input type="submit" th:formaction="'/order/cake/'+${cake.cakeId.id}" value="Order Cake!"/>
-            </figure>
+            <form action="#" method="post">
+                <figure>
+                    <img th:src="${cake.picture}" th:alt="${cake.name}" width="250" height="250">
+                    <figcaption th:inline="text">[[${cake.name}]]</figcaption>
+                    <p th:inline="text">[[${cake.description}]]</p>
+                    <input type="submit" th:formaction="'/order/cake/'+${cake.cakeId.id}" value="Order Cake!"/>
+                </figure>
+            </form>
         </article>
-        </form>
 
         <!--article id="cake1" class="card">
             <figure>

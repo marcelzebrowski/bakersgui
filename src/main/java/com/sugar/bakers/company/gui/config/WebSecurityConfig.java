@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -26,11 +27,18 @@ public class WebSecurityConfig{
                 .disable()
                     .formLogin(form->form.loginPage("/login")
                         .usernameParameter("username")
-                        .passwordParameter("password").permitAll()).logout(LogoutConfigurer::permitAll);
+                        .passwordParameter("password")
+                        .successHandler(myAuthenticationSuccessHandler()).permitAll()).logout(LogoutConfigurer::permitAll);
         http.authorizeHttpRequests((authentication) ->
                 authentication.anyRequest().authenticated()
         );
+
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new DefaultAuthentificationSuccessHandler();
     }
 
     @Bean
@@ -50,6 +58,7 @@ public class WebSecurityConfig{
     }
 
     private void createMockUser(BCryptPasswordEncoder bCryptPasswordEncoder, InMemoryUserDetailsManager manager, String name){
+
         manager.createUser(User.withUsername(name)
                 .password(bCryptPasswordEncoder.encode(name))
                 .roles("USER")

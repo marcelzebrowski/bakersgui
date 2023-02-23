@@ -1,10 +1,9 @@
 package com.sugar.bakers.company.gui;
 
 import com.sugar.bakers.company.domain.Cake;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sugar.bakers.company.domain.Customer;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 @Controller
 public class CakeController {
@@ -26,10 +24,10 @@ public class CakeController {
     @Value("${bakershexagon.service.port}")
     private String orderRestControllerPort;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @RequestMapping(value = {"/cake","/"}, method = RequestMethod.GET)
-    public String showAllCakes(Model model){
+    public String preparePage(HttpServletRequest request, Model model){
 
         String url = orderRestControllerUrl + ":" + orderRestControllerPort + "/cakes";
 
@@ -40,14 +38,25 @@ public class CakeController {
 
         model.addAttribute("cakes",cakeList);
 
-        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
+        Customer customer = (Customer) request.getSession().getAttribute("user");
+        model.addAttribute("username", customer.getName());
 
         return "cake";
     }
 
 
     @PostMapping("/order/cake/{id}")
-    public String dropOrder(Model model, @PathVariable Long id){
+    public String dropAnOrder(HttpServletRequest request, Model model, @PathVariable Long id){
+
+        Customer customer = (Customer) request.getSession().getAttribute("user");
+        String url = orderRestControllerUrl + ":" + orderRestControllerPort + "/order/new";
+
+        url += "/" + customer.getCustomerId().getId();
+        url += "/" + id;
+
+        ResponseEntity<String> response = restTemplate.postForEntity( url, null , String.class );
+
+
         return "success";
     }
 
