@@ -54,7 +54,21 @@ public class CakeController {
         url += "/" + customer.getCustomerId().getId();
         url += "/" + id;
 
+        // place Order
         restTemplate.postForEntity( url, null , String.class );
+
+
+        // next page
+        url = orderRestControllerUrl + ":" + orderRestControllerPort + "/cake/" + id;
+        ResponseEntity<Cake> response = restTemplate.getForEntity(url,Cake.class);
+        Cake cake = response.getBody();
+        assert cake != null;
+
+        String imageUrl = orderRestControllerUrl + ":" + orderRestControllerPort + "/images/";
+        cake.setPicture(imageUrl + cake.getPicture());
+
+        model.addAttribute("cake", cake);
+
         return "success";
     }
 

@@ -13,9 +13,9 @@
     </header>
 
     <main>
-        <article id="cake1" class="card">
+        <article th:id="'cake' + ${cake.cakeId.id}" class="card">
             <figure>
-                <img src="img/apple.png" alt="Apple Pie" width="250" height="250">
+                <img th:src="${cake.picture}" th:alt="${cake.name}" width="250" height="250">
                 <figcaption class="tiny_cake">Order received</figcaption>
                 <form class="logoutLblPos" th:action="@{/logout}" method="post">
                     <input type="submit" value="Sign Out"/>
